@@ -47,6 +47,7 @@ class DisjointSetTest(unittest.TestCase):
         self.ds.add(elements[2])
         self.assertEquals(self.ds.find(1), self.ds.find(2))
         self.assertEquals(3, self.ds.find(3))
+        self.assertNotEqual(self.ds.find(2), self.ds.find(3))
         self.ds.union(1, 3)
         self.assert_all_elements_unioned(elements)
 
@@ -64,6 +65,22 @@ class DisjointSetTest(unittest.TestCase):
         self.ds.add_many(elements)
         self.ds.union(1, 2)
         self.ds.union(3, 2)
+        self.assert_all_elements_unioned(elements)
+
+    @istest
+    def multistep_unions(self):
+        elements = [1, 2, 3, 4, 5, 6]
+        self.ds.add_many(elements)
+        self.ds.union(1, 2)
+        self.ds.union(3, 2)
+        self.ds.union(5, 4)
+
+        self.assertNotEqual(self.ds.find(2), self.ds.find(4))
+        self.ds.union(4, 3)
+        self.assertEqual(self.ds.find(2), self.ds.find(4))
+
+        self.assertNotEqual(self.ds.find(6), self.ds.find(4))
+        self.ds.union(6, 2)
         self.assert_all_elements_unioned(elements)
 
     def assert_all_elements_unioned(self, elements):
