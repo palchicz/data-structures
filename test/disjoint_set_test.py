@@ -37,3 +37,15 @@ class DisjointSetTest(unittest.TestCase):
         self.ds.add_many([1, 2])
         self.ds.union(1, 2)
         self.assertEquals(self.ds.find(1), self.ds.find(2))
+
+    @istest
+    def add_elements_after_a_union(self):
+        self.ds.add_many([1, 2])
+        self.ds.union(1, 2)
+        self.ds.add(3)
+        self.assertEquals(self.ds.find(1), self.ds.find(2))
+        self.assertEquals(3, self.ds.find(3))
+        self.ds.union(1, 3)
+        self.assertEquals(self.ds.find(1), self.ds.find(2))
+        self.assertEquals(self.ds.find(2), self.ds.find(3))
+        self.assertEquals(self.ds.find(1), self.ds.find(3))
