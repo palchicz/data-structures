@@ -12,21 +12,21 @@ class DisjointSetTest(unittest.TestCase):
         self.ds = DisjointSet()
 
     @istest
-    def can_add_elements(self):
+    def add_elements(self):
         self.ds.add(1)
         self.assertEquals(1, len(self.ds))
         self.ds.add('a')
         self.assertEquals(2, len(self.ds))
 
     @istest
-    def can_add_many_elements(self):
+    def add_many_elements(self):
         self.ds.add_many([1, 2, 3])
         self.assertEquals(3, len(self.ds))
         self.ds.add_many(letter for letter in 'abc')
         self.assertEquals(6, len(self.ds))
 
     @istest
-    def can_find_set_representitive(self):
+    def find_set_representitive(self):
         test_elements = [1, 2, 3]
         self.ds.add_many(test_elements)
         for element in test_elements:
