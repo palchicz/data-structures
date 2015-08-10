@@ -18,5 +18,10 @@ class DisjointSet():
         return self._parents[element]
 
 
+    def union(self, a, b):
+        root_a = self.find(a)
+        root_b = self.find(b)
+        self._parents[root_b] = root_a
+
     def __len__(self):
         return len(self._parents)

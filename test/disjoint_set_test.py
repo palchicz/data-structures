@@ -26,8 +26,14 @@ class DisjointSetTest(unittest.TestCase):
         self.assertEquals(6, len(self.ds))
 
     @istest
-    def find_set_representitive(self):
+    def island_elements_find_themselves(self):
         test_elements = [1, 2, 3]
         self.ds.add_many(test_elements)
         for element in test_elements:
             self.assertEquals(element, self.ds.find(element))
+
+    @istest
+    def union_two_elements(self):
+        self.ds.add_many([1, 2])
+        self.ds.union(1, 2)
+        self.assertEquals(self.ds.find(1), self.ds.find(2))
