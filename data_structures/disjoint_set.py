@@ -16,9 +16,17 @@ class DisjointSet():
 
     def find(self, element):
         set_identifier = element
-        while self._parent[set_identifier] != set_identifier:
+        path = set()
+        while not self._is_root(set_identifier):
+            path.add(set_identifier)
             set_identifier = self._parent[set_identifier]
+        for set_member in path:
+           self._parent[set_member] = set_identifier
         return set_identifier
+
+
+    def _is_root(self, element):
+        return self._parent[element] == element
 
 
     def union(self, a, b):
