@@ -83,6 +83,16 @@ class DisjointSetTest(unittest.TestCase):
         self.ds.union(6, 2)
         self.assert_all_elements_unioned(elements)
 
+    @istest
+    def unioning_joint_elements_has_no_effect(self):
+        elements = [1, 2, 3, 4]
+        self.ds.add_many(elements)
+        self.ds.union(1, 2)
+        self.ds.union(3, 4)
+        self.ds.union(2, 3)
+        self.ds.union(1, 4)
+        self.assert_all_elements_unioned(elements)
+
     def assert_all_elements_unioned(self, elements):
         for a in elements:
             for b in elements:
