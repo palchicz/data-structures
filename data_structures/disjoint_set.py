@@ -2,11 +2,11 @@ class DisjointSet():
 
 
     def __init__(self):
-        self._parents = {}
+        self._parent = {}
 
 
     def add(self, element):
-        self._parents[element] = element
+        self._parent[element] = element
 
 
     def add_many(self, elements):
@@ -15,13 +15,17 @@ class DisjointSet():
 
 
     def find(self, element):
-        return self._parents[element]
+        set_identifier = element
+        while self._parent[set_identifier] != set_identifier:
+            set_identifier = self._parent[set_identifier]
+        return set_identifier
 
 
     def union(self, a, b):
         root_a = self.find(a)
         root_b = self.find(b)
-        self._parents[root_b] = root_a
+        self._parent[root_b] = root_a
+
 
     def __len__(self):
-        return len(self._parents)
+        return len(self._parent)

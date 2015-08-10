@@ -58,6 +58,14 @@ class DisjointSetTest(unittest.TestCase):
         self.ds.union(2, 3)
         self.assert_all_elements_unioned(elements)
 
+    @istest
+    def union_order_doesnt_matter(self):
+        elements = [1, 2, 3]
+        self.ds.add_many(elements)
+        self.ds.union(1, 2)
+        self.ds.union(3, 2)
+        self.assert_all_elements_unioned(elements)
+
     def assert_all_elements_unioned(self, elements):
         for a in elements:
             for b in elements:
