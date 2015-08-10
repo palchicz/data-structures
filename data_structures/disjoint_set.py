@@ -3,10 +3,12 @@ class DisjointSet():
 
     def __init__(self):
         self._parent = {}
+        self._rank = {}
 
 
     def add(self, element):
         self._parent[element] = element
+        self._rank[element] = 0
 
 
     def add_many(self, elements):
@@ -32,7 +34,15 @@ class DisjointSet():
     def union(self, a, b):
         root_a = self.find(a)
         root_b = self.find(b)
-        self._parent[root_b] = root_a
+        if root_a == root_b:
+            pass
+        elif self._rank[root_a] == self._rank[root_b]:
+            self._parent[root_b] = root_a
+            self._rank[root_a] += 1
+        elif self._rank[root_a] > self._rank[root_b]:
+            self._parent[root_b] = root_a
+        else:
+            self._parent[root_a] = root_b
 
 
     def __len__(self):
