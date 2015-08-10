@@ -34,18 +34,32 @@ class DisjointSetTest(unittest.TestCase):
 
     @istest
     def union_two_elements(self):
-        self.ds.add_many([1, 2])
+        elements = [1, 2]
+        self.ds.add_many(elements)
         self.ds.union(1, 2)
-        self.assertEquals(self.ds.find(1), self.ds.find(2))
+        self.assert_all_elements_unioned(elements)
 
     @istest
     def add_elements_after_a_union(self):
-        self.ds.add_many([1, 2])
+        elements = [1, 2, 3]
+        self.ds.add_many(elements[:2])
         self.ds.union(1, 2)
-        self.ds.add(3)
+        self.ds.add(elements[2])
         self.assertEquals(self.ds.find(1), self.ds.find(2))
         self.assertEquals(3, self.ds.find(3))
         self.ds.union(1, 3)
-        self.assertEquals(self.ds.find(1), self.ds.find(2))
-        self.assertEquals(self.ds.find(2), self.ds.find(3))
-        self.assertEquals(self.ds.find(1), self.ds.find(3))
+        self.assert_all_elements_unioned(elements)
+
+    @istest
+    def transitive_union(self):
+        elements = [1, 2, 3]
+        self.ds.add_many(elements)
+        self.ds.union(1, 2)
+        self.ds.union(2, 3)
+        self.assert_all_elements_unioned(elements)
+
+    def assert_all_elements_unioned(self, elements):
+        for a in elements:
+            for b in elements:
+                self.assertEquals(self.ds.find(a), self.ds.find(b))
+
